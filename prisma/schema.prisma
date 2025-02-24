@@ -34,5 +34,5 @@ model Billboard{
 
   //relation: connect relation to store _ refering to the id of the store
   store         Store @relation("StoreToBillboard", fields: [storeId], references: [id])
-  
+
 }

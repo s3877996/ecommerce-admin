@@ -9,22 +9,22 @@ import { StoreModal } from "@/components/modals/store-modal";
 
 
 export const ModalProvider = () => {
-    const [isMounted, setIsMounted] = useState(false);
+   const [isMounted, setIsMounted] = useState(false);
 
-     useEffect(() => {
-        setIsMounted(true);
-     }, []);
+   useEffect(() => {
+      setIsMounted(true);
+   }, []);
 
-     if(!isMounted){
-        return null;
-     }
+   if(!isMounted){
+      return null;
+   }
 
      // if we are already mounted (in the client site)
-     return(
+   return(
       <>
          <StoreModal/>
       </>
-     )
+   )
 }
 
 // so we want to add this ModalProvider inside the app/layout.tsx. However, the "app/layout.tsx" is a server component.

@@ -7,18 +7,18 @@ import prismadb from "@/lib/prismadb";
 // GET a single size
 export async function GET(
     req: Request,
-    context: Promise<{ params: { sizedId: string } }>
+    context: Promise<{ params: { sizeId: string } }>
 ) {
     try {
         const { params } = await context; // Await context before accessing params
-        const { sizedId } = params;
+        const { sizeId } = params;
 
-        if (!sizedId) {
+        if (!sizeId) {
             return new NextResponse("Size ID is required", { status: 400 });
         }
 
         const size = await prismadb.size.findUnique({
-            where: { id: sizedId },
+            where: { id: sizeId },
         });
 
         return NextResponse.json(size);

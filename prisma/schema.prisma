@@ -13,6 +13,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+// Store Model
 model Store{
   id            String    @id @default(uuid())
   name          String
@@ -20,9 +22,17 @@ model Store{
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  billboard Billboard[] @relation("StoreToBillboard")
+  //relation: connect relation to user _ refering to the id of the user
+  billboards Billboard[] @relation("StoreToBillboard")
+
+  //relation: connect relation to category _ refering to the id of the category
+  categories Category[] @relation("StoreToCategory")
+
+  //relation: connect relation to size _ refering to the id of the size
+  sizes Size[] @relation("StoreToSize")
 }
 
+// Billboard Model
 model Billboard{
   id            String @id @default(uuid())
   storeId       String
@@ -30,9 +40,44 @@ model Billboard{
   imageUrl      String
   createdAt     DateTime @default(now())
   updatedAt     DateTime  @updatedAt
-
+  category      Category[]
 
   //relation: connect relation to store _ refering to the id of the store
   store         Store @relation("StoreToBillboard", fields: [storeId], references: [id])
 
+  @@index([storeId])
+}
+
+// Category Model
+model Category{
+  id            String @id @default(uuid())
+  storeId       String
+
+  billboardId   String
+  name          String
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  //relation: connect relation to store _ refering to the id of the store
+  store         Store @relation("StoreToCategory", fields: [storeId], references: [id])
+
+  // relation: connect relation to billboard _ refering to the id of the
+  billboard     Billboard @relation(fields: [billboardId], references: [id])
+
+  @@index([storeId])
+  @@index([billboardId])
+}
+
+// Size model
+model Size{
+  id            String @id @default(uuid())
+  storeId       String
+  store         Store @relation("StoreToSize", fields: [storeId], references: [id])
+  name          String
+  value         String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([storeId])
 }

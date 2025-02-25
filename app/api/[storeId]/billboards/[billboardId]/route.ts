@@ -54,7 +54,7 @@ export async function PATCH(
         if (!storeByUserId) return new NextResponse("Unauthorized", { status: 403 });
 
         // Update the billboard
-        const billboard = await prismadb.billboard.update({
+        const billboard = await prismadb.billboard.updateMany({
             where: { id: billboardId },
             data: { label, imageUrl },
         });
@@ -88,7 +88,7 @@ export async function DELETE(
         if (!storeByUserId) return new NextResponse("Unauthorized", { status: 403 });
 
         // Delete the billboard
-        const deletedBillboard = await prismadb.billboard.delete({
+        const deletedBillboard = await prismadb.billboard.deleteMany({
             where: { id: billboardId },
         });
 
